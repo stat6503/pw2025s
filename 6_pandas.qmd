@@ -1,0 +1,698 @@
+---
+jupyter: python3
+---
+
+<h1>6. Pandas</h1>
+<br>
+
+## 6.1. 판다스 객체
+### 6.1.1. 판다스 객체 생성
++ Pandas
+  + NumPy를 기반으로 만들어진 데이터 분석용 라이브러리
+  + 레이블(label)로 식별되는 데이터를 쉽게 다룰 수 있도록 지원
+  + 고성능 데이터 조작, 탐색, 전처리, 변환, 요약, 통계 연산 기능 제공
+  + 주요 객체로는 Series(1차원), DataFrame(2차원), Index(레이블 관리 구조)가 있음
+
+<br>
+
+|객체|설명|
+|:---:|:---------------|
+|Series|- 1차원 레이블이 붙은 배열로, 각 데이터에 고유한 인덱스가 있음 <br>- 모든 원소가 동일한 자료형으로 저장되며, 다양한 자료형을 지원|
+|DataFrame|- 2차원 표 형태의 데이터 구조로, 행(row)과 열(column)로 구성됨 <br>- 각 열은 Series로 구성되어 있으며, 서로 다른 자료형을 가질 수 있음 <br>- DataFrame은 정렬된(같은 인덱스 공유) Series 객체의 연속으로 볼 수 있음|
+|Index|- 데이터에 레이블을 부여하는 객체로, 행 또는 열에 사용됨 <br>- 데이터 정렬, 선택, 결합 등을 효율적으로 할 수 있도록 지원|
+
+<br>
+
+|함수|설명|
+|:---:|:------------|
+|pd.Series()|1차원 Series 객체 생성|
+|pd.DataFrame()|2차원 DataFrame 객체 생성|
+|pd.Index()|Index 객체 생성|
+
+<br>
+
+```{python}
+import numpy as np
+import pandas as pd
+```
+
+```{python}
+# Series 생성1 : 리스트 사용
+sr = pd.Series([1, 2, 3, 4, 5])
+print(sr)
+```
+
+```{python}
+# Series 생성2 : 넘파이 배열 사용
+sr = pd.Series(np.array([1, 2, 3, 4, 5]))
+print(sr)
+```
+
+```{python}
+# Series 생성3 : 딕셔너리 사용
+# 딕셔너리 키는 인덱스로 자동 지정됨
+sr = pd.Series({'a': 10, 'b': 20, 'c': 30})
+print(sr)
+```
+
+```{python}
+# Series 생성4 : 인덱스 지정
+sr = pd.Series([1, 2, 3], index = ['a', 'b', 'c'])
+print(sr)
+```
+
+```{python}
+# DataFrame 생성1 : Series 사용
+sr = pd.Series([1, 2, 3], index = ['a', 'b', 'c'])
+df = pd.DataFrame(sr, columns = ['value'])
+print(df)
+```
+
+```{python}
+# DataFrame 생성2 : 리스트 사용
+lst = [['Alice', 22], ['Bob', 20], ['Charlie', 27]]
+df = pd.DataFrame(lst, columns=['Name', 'Age'])
+print(df)
+```
+
+```{python}
+# DataFrame 생성3 : 넘파이 배열 사용
+arr = np.array([['Alice', 22], ['Bob', 20], ['Charlie', 27]])
+df = pd.DataFrame(arr, columns=['Name', 'Age'])
+print(df)
+```
+
+```{python}
+# DataFrame 생성4 : 딕셔너리 사용
+# 딕셔너리 키는 열 이름으로 자동 지정됨
+dct = {'Name': ['Alice', 'Bob', 'Charlie'], 'Age': [22, 20, 27]}
+df = pd.DataFrame(dct)
+print(df)
+```
+
+```{python}
+# DataFrame 생성5 : 딕셔너리 + 리스트 컴프리헨션 사용
+dct = [{'a': i, 'b': 2*i} for i in range(3)]
+df = pd.DataFrame(dct)
+print(df)
+```
+
+```{python}
+# DataFrame 생성6 : Series 사용
+# 서로 다른 인덱스를 가진 Series로 DataFrame을 생성하면
+# 공통된 인덱스를 기준으로 맞춰지고, 누락된 값은 NaN(Not a Number)으로 채워짐
+sr1 = pd.Series([1, 2, 3], index = ['a', 'b', 'c'])
+sr2 = pd.Series([4, 5, 6], index = ['a', 'c', 'd'])
+df = pd.DataFrame({'x': sr1, 'y': sr2})
+print(df)
+```
+
+```{python}
+# DataFrame 생성7 : 인덱스 및 열 이름 지정
+data = [[101, 22], [102, 20], [103, 27]]
+columns = ['ID', 'Age']
+index = ['Alice', 'Bob', 'Charlie']
+df = pd.DataFrame(data, columns=columns, index=index)
+print(df)
+```
+
+```{python}
+# Index 생성1 : 리스트 사용
+idx = pd.Index(['a', 'b', 'c', 'd'])
+idx
+```
+
+```{python}
+# Index 생성2 : range() 사용
+idx = pd.Index(range(1, 6))
+idx
+```
+
+<br>
+
+### 6.1.2. 데이터프레임 속성
+|속성|설명|
+|:---:|:------------|
+|.shape|데이터프레임의 모양(행, 열)|
+|.index|행 인덱스 조회 및 변경|
+|.columns|열 이름 조회 및 변경|
+|.dtypes|각 열의 자료형 확인|
+
+<br>
+
+```{python}
+# 데이터프레임 속성
+df = pd.DataFrame({
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eva'],
+    'Age': [25, 30, 35, 40, 28],
+    'Score': [85.5, 90.3, 78.2, 88.9, 92.5]
+})
+
+print(df.shape)
+print(df.index)
+print(df.columns)
+print(df.dtypes)
+```
+
+```{python}
+# 행 인덱스 변경
+df.index = ['a', 'b', 'c', 'd', 'e']
+print(df)
+```
+
+```{python}
+# 열 이름 변경
+df.columns = ['Student Name', 'Student Age', 'Exam Score']
+print(df)
+```
+
+<br>
+
+### 6.1.3. 데이터프레임 정보
+|함수|설명|
+|:---:|:------------|
+|info()|기본 정보(행 개수, 열 개수, 데이터 자료형, 결측값 여부 등) 출력|
+|head()|상위 n개의 행 출력(초기 값 n=5)|
+|describe()|수치형 데이터의 요약 통계량(평균, 표준편차 등) 제공|
+
+<br>
+
+```{python}
+df = pd.DataFrame({
+    'Name': ['Alice', 'Bob', 'Charlie', 'David', 'Eva'],
+    'Age': [25, 30, 35, 40, 28],
+    'Score': [85.5, 90.3, 78.2, 88.9, 92.5]
+})
+```
+
+```{python}
+# 기본 정보
+print(df.info())
+```
+
+```{python}
+# 상위 5개 행
+print(df.head())
+```
+
+```{python}
+# 요약 통계량
+print(df.describe())
+```
+
+<br>
+
+## 6.2. 인덱싱과 슬라이싱
+### 6.2.1. 열 인덱싱과 슬라이싱
++ 열 이름을 사용하여 직접 선택
+  + 여러 개의 열을 선택할 때는 열 이름을 리스트로 작성
++ `loc[:, ]` : 레이블(label) 기반 접근 방식
++ `iloc[:, ]` : 정수(integer) 기반 접근 방식
+
+<br>
+
+```{python}
+df = pd.DataFrame({
+    'A': [1, 2, 3],
+    'B': [4, 5, 6],
+    'C': [7, 8, 9],
+    'D': [10, 11, 12]
+}, index=['x', 'y', 'z'])
+```
+
+```python
+# 열 인덱싱과 슬라이싱1 : 열 이름 사용
+df['A']                                      # 열 이름
+df[['A', 'C']]                               # 열 이름 리스트
+#df['A':'B']                                 # 열 이름 슬라이싱은 안 됨, Error!
+```
+
+```python
+# 열 인덱싱과 슬라이싱2 : 레이블 기반 접근
+df.loc[:, 'A']                               # 열 이름
+df.loc[:, ['A', 'C']]                        # 열 이름 리스트
+df.loc[:, 'A':'B']                           # 열 이름 슬라이싱
+df.loc[:, 'B'::2]                            # 열 이름 스트라이딩
+df.loc[:, [True, False, True, True]]         # bool 리스트
+```
+
+```python
+# 열 인덱싱과 슬라이싱3 : 정수 기반 접근
+df.iloc[:, 0]                                # 정수
+df.iloc[:, [0, 3]]                           # 정수 리스트
+df.iloc[:, range(2)]                         # range
+df.iloc[:, 0:3]                              # 슬라이싱
+df.iloc[:, 1::2]                             # 스트라이딩
+```
+
+<br>
+
+### 6.2.2. 행 인덱싱과 슬라이싱
++ `loc[, :]` : 레이블(label) 기반 접근 방식
++ `iloc[, :]` : 정수(integer) 기반 접근 방식
+
+<br>
+
+```python
+# 행 인덱싱과 슬라이싱1 : 레이블 기반 접근
+df.loc['x', ]                                # 인덱스 이름
+df.loc[['x', 'y'], :]                        # 인덱스 이름 리스트
+df.loc['x':'y', :]                           # 인덱스 이름 슬라이싱
+df.loc['x'::1, :]                            # 인덱스 이름 스트라이딩
+df.loc[[True, False, True], :]               # bool 리스트
+df.loc[list(df['A'] < 3), :]                 # bool 리스트
+df.loc[df['A'] < 3, :]                       # bool 리스트
+```
+
+```python
+# 행 인덱싱과 슬라이싱2 : 정수 기반 접근
+df.iloc[0, :]                                # 정수
+df.iloc[[0, 2], :]                           # 정수 리스트
+df.iloc[range(2), :]                         # range
+df.iloc[0:1, :]                              # 슬라이싱
+df.iloc[1::2, :]                             # 스트라이딩
+df.iloc[[True, False, True], :]              # bool 리스트 (권장하지 않음)
+df.iloc[list(df['A'] < 3), :]                # bool 리스트 (권장하지 않음)
+#df.iloc[df['A'] < 3, :]                     # bool 리스트 (Error!)
+```
+
+```python
+# 행 인덱싱과 슬라이싱3 : 정수 기반 접근
+df.iloc[0]                                   # 정수
+df.iloc[[0, 2]]                              # 정수 리스트
+df.iloc[range(2)]                            # range
+df.iloc[0:1]                                 # 슬라이싱
+df.iloc[1::2]                                # 스트라이딩
+df.iloc[[True, False, True]]                 # bool 리스트(권장하지 않음)
+df.iloc[list(df['A'] < 3)]                   # bool 리스트(권장하지 않음)
+#df.iloc[df['A'] < 3]                        # bool 리스트 (Error!)
+```
+
+```python
+# 행 인덱싱과 슬라이싱4
+# 인덱싱은 열을 참조하는 반면, 슬라이싱은 행을 참조함
+#df[0]                                       # Error!
+df[0:2]                                      # 권장하지 않음
+df['x':'y']                                  # 권장하지 않음
+df[df['A'] < 3]                              # 불리언 인덱싱은 행 단위로 적용됨
+```
+
+```python
+# 행 인덱싱과 슬라이싱5
+df = pd.DataFrame({
+    'A': [1, 2, 3],
+    'B': [4, 5, 6],
+    'C': [7, 8, 9],
+    'D': [10, 11, 12]})
+
+df.loc[0:1]                                  # 명시적 인덱스(label) 사용 - 마지막 인덱스 포함
+df.iloc[0:1]                                 # 암묵적 인덱스(integer) 사용 - 마지막 인덱스 제외
+df[0:1]                                      # 암묵적 인덱스(integer) 사용, iloc와 동일
+```
+
+<br>
+
+## 6.3. 데이터프레임 연산
+### 6.3.1. 기본 연산
++ NumPy와 동일하게 벡터화, 브로드캐스팅 모두 지원
++ 단항 연산: 인덱스와 열 레이블 보존
++ 이항 연산: 인덱스와 열 레이블을 기준으로 자동 정렬되어 연산
+  + 위치가 아닌 동일한 레이블끼리 연산하며, 일치하지 않는 항목은 `NaN`으로 처리
+
+<br>
+
+```{python}
+# 단항 연산1 : Series
+sr = pd.Series([1, 2, 3, 4, 5])
+print(sr + 2)
+```
+
+```{python}
+# 단항 연산2 : DataFrame
+df = pd.DataFrame({
+    'x': [1, 2, 3, 4, 5],
+    'y': [11, 12, 13, 14, 15] 
+})
+print(np.log(df))
+```
+
+```{python}
+# 이항 연산1 : Series
+# 두 시리즈에 존재하는 모든 행 인덱스를 포함한 결과 생성 (합집합처럼 동작)
+math = pd.Series({'Alice': 85, 'Bob': 90, 'Charlie': 78})
+english = pd.Series({'Alice': 95, 'Charlie': 80, 'David': 88})
+print(math + english)
+```
+
+```{python}
+# 이항 연산2: DataFrame
+midterm = pd.DataFrame({
+    'math': [85, 90, 78],
+    'science': [88, 92, 79]
+}, index=['Alice', 'Bob', 'Charlie'])
+
+final = pd.DataFrame({
+    'math': [95, 88, 82],
+    'english': [95, 80, 88]
+}, index=['Alice', 'Charlie', 'David'])
+
+print(midterm + final)
+```
+
+<br>
+
+### 6.3.2. 연산자 메소드
++ 인덱스와 열 레이블이 일치하지 않아도 연산 가능
++ 예외 처리가 필요한 경우 기본 연산자보다 안정적임
+  + `fill_value` 인수를 사용하여 `NaN`를 다른 값으로 처리 가능
+
+<br>
+
+|연산자|연산자 메소드|
+|:---:|:------------|
+|+|add()|
+|-|sub()|
+|*|mul()|
+|/|divide()|
+|//|floordiv()|
+|%|mod()|
+|**|pow()|
+
+<br>
+
+```{python}
+# 연산자 메소드1
+# midterm + final과 동일한 결과
+print(midterm.add(final))
+```
+
+```{python}
+# 연산자 메소드2
+# 하나의 데이터프레임에만 값이 있는 경우 0으로 처리하고, 둘 다 값이 없으면 NaN 반환
+print(midterm.add(final, fill_value = 0))
+```
+
+<br>
+
+### 6.3.3. 새로운 열 생성
+|함수|설명|
+|:---:|:---------------|
+|assign()|기존 데이터프레임을 수정하지 않고, 새로운 열을 추가한 복사본을 반환|
+|eval()|수식을 문자열로 작성하여 열 간 계산을 간결하게 수행(직관적인 수식 표현)|
+|where()|조건에 따라 서로 다른 값을 선택하여 새로운 열 생성(NumPy 메소드)|
+
+<br>
+
+```{python}
+df = pd.DataFrame({
+    'product': ['A', 'B', 'C', 'D', 'E'],
+    'price': [100, 200, 150, 300, 250],
+    'quantity': [10, 5, 3, 7, 6]
+})
+print(df)
+```
+
+```{python}
+# 새로운 열 생성1: 기본 할당
+# 기본 할당은 데이터를 직접 수정하므로, 권장하지 않음
+df['total_price'] = df['price'] * df['quantity']
+print(df)
+```
+
+```{python}
+# 새로운 열 생성2: assign() 사용
+print(df.assign(total_price = df['price'] * df['quantity']))
+```
+
+```{python}
+# 새로운 열 생성3: eval() 사용
+# inplace=True: 기존 데이터프레임에 직접 적용(새 객체를 반환하지 않음)
+df.eval('total_price = price * quantity', inplace=True)
+print(df)
+```
+
+```{python}
+# 새로운 열 생성4: where() 사용
+# 가격이 200 이상이면 'Expensive', 아니면 'Affordable'로 구분
+df['price_category'] = np.where(df['price'] >= 200, 'Expensive', 'Affordable')
+print(df)
+```
+
+<br>
+
+#### 6.3.4. 데이터프레임 집계
++ NumPy와 동일한 축 개념 사용
+  + axis 0 : 행 방향 연산(열 단위로 요약)
+  + axis 1 : 열 방향 연산(행 단위로 요약)
++ 수치형 데이터에 적용되며, NaN은 기본적으로 제외됨
+
+<br>
+
+|함수|설명|
+|:---:|:------------|
+|count()|NaN를 제외한 행의 개수|
+|value_counts()|집단별 빈도|
+|sum()|합계|
+|mean()|평균|
+|std()|표준편차|
+|median()|중앙값|
+|min(), max()|최소값, 최대값|
+|cumsum(), cumprod()|누적 합계, 누적 곱|
+
+<br>
+
+```{python}
+## 실습 데이터 : tips 데이터셋
+import seaborn as sns
+tips = sns.load_dataset('tips')
+```
+
+```{python}
+# total_bill: 식사 금액
+# tip: 팁 금액
+# sex: 성별
+# smoker: 흡연 여부
+# day: 요일
+# time: 식사 시간(Lunch, Dinner)
+# size: 식사 인원 수
+print(tips.info())
+```
+
+```{python}
+print(tips.head())
+```
+
+```{python}
+print(tips.describe())
+```
+
+```{python}
+# 각 열의 유효한 데이터 수 (NaN 제외)
+print(tips.count())
+```
+
+```{python}
+# 식사 시간별 주문 수
+print(tips.value_counts('time'))
+```
+
+```{python}
+# 전체(합계) 식사 금액, 팁 금액, 식사 인원 수
+print(tips[['total_bill', 'tip', 'size']].sum())
+```
+
+```{python}
+# 고객 1인당 평균 식사 금액
+print((tips['total_bill'] / tips['size']).mean())
+```
+
+```{python}
+# 고객 1인당 평균 팁 금액
+print((tips['tip'] / tips['size']).mean())
+```
+
+```{python}
+# 전체 식사 금액에서 팁이 차지하는 비율
+print(tips['tip'] / tips['total_bill'])
+```
+
+```{python}
+# 전체 식사 금액에서 팁이 차지하는 비율에 대한 요약 통계량
+print((tips['tip'] / tips['total_bill']).describe())
+```
+
+```{python}
+# 전체 식사 금액에서 팁이 차지하는 비율이 50% 이상인 경우
+print(tips[tips['tip'] / tips['total_bill'] >= 0.5])
+```
+
+<br>
+
+## 6.4. 고급 데이터 처리
+### 6.4.1. 집단별 연산
++ `groupby()` 함수를 이용하여 특정 열을 기준으로 데이터를 집단화한 후, 다양한 연산 수행 가능
++ SQL의 GROUP BY와 유사한 기능을 제공하며, 집계, 변환, 필터링을 지원
+
+<br>
+
+|함수|설명|
+|:---:|:------------|
+|aggregate() 또는 agg()|여러 집계 함수를 동시에 적용(문자열, 함수, 리스트 등 가능)|
+|filter()|집단별 집계 결과를 조건으로 집단 자체를 필터링|
+|transform()|집단별 연산 결과를 원래 구조와 같은 형태로 반환(원소 개수 유지)|
+|apply()|임의의 함수를 전체 집단에 유연하게 적용(집계, 반환 모두 가능)|
+
+<br>
+
+```{python}
+#  실습 데이터 : tips 데이터셋
+tips = sns.load_dataset('tips')
+```
+
+```{python}
+# 요일별 평균 식사 금액
+# observed=False: 모든 범주 포함, 실제 데이터가 없으면 NaN
+print(tips.groupby('day', observed=False)['total_bill'].mean())
+```
+
+```{python}
+# 식사 시간별 식사 금액, 팁 금액의 평균 및 표준편차
+print(tips.groupby('time', observed=False)[['total_bill', 'tip']].agg(['mean', 'std']))
+```
+
+```{python}
+# 식사 시간별 식사 금액의 최대값, 팁 금액의 최소값: 딕셔너리 사용
+print(tips.groupby('time', observed=False).agg({'total_bill': 'max', 'tip': 'min'}).reset_index())
+```
+
+```{python}
+# 식사 시간별 식사 금액의 최대값, 팁 금액의 최소값: 튜플 사용, named aggregation 문법
+print(tips.groupby('time', observed=False).agg(total_bill_max = ('total_bill', 'max'), tip_min = ('tip', 'min')).reset_index())
+```
+
+
+<br>
+
++ [참고] 람다 함수(lamdba function)
+  + 함수 이름 없이 일시적으로 정의해 사용할 수 있는 익명 함수
+  + `def`, `return` 없이 간단한 함수 로직을 한 줄로 표현
+  + 구조는 일반 함수와 같지만, 주로 짧고 단순한 연산에 사용
+  + `apply()`, `filter()` 등 함수의 인수로 전달할 때 유용하게 활용
+
+<br>
+
+```{python}
+# 함수 정의
+def f(x, y):
+    return x + y
+f(1, 4)
+```
+
+```{python}
+# 람다 함수
+(lambda x, y: x + y)(1, 4)
+```
+
+```{python}
+# 팀 금액 평균이 3달러 이상인 요일 데이터 필터링: 함수 정의
+def filter_tip_avg(x):
+    return x['tip'].mean() >= 3
+
+print(tips.groupby('day', observed=False).filter(filter_tip_avg))
+```
+
+```{python}
+# 팀 금액 평균이 3달러 이상인 요일 데이터 필터링: 람다 함수 사용
+print(tips.groupby('day', observed=False).filter(lambda x: x['tip'].mean() >= 3))
+```
+
+```{python}
+# 성별 팁 금액의 편차
+tips['tip_dev'] = tips.groupby('sex', observed=False)['tip'].transform(lambda x: x - x.mean())
+print(tips[['sex', 'tip', 'tip_dev']].head())
+```
+
+```{python}
+# 식사 시간별 팁 금액의 사분위수범위: 함수 정의
+def iqr(x):
+    return x.quantile(0.75) - x.quantile(0.25)
+
+print(tips.groupby('time', observed=False)['tip'].apply(iqr))
+```
+
+```{python}
+# 식사 시간별 팁 금액의 사분위수범위: 람다 함수 사용
+print(tips.groupby('time', observed=False)['tip'].apply(lambda x: x.quantile(0.75) - x.quantile(0.25)))
+```
+
+<br>
+
+### 6.4.2. 표현식 기반 처리
++ eval(), query() 메소드를 사용하면 문자열 형태의 표현식을 통해 데이터를 보다 직관적으로 처리 가능
++ 복잡한 연산이나 조건 필터링을 간결하게 표현할 수 있어 가독성과 성능 모두에 유리함
+  + 데이터프레임의 열 이름을 따옴표 없이 사용 가능
+  + 외부 변수는 `@` 기호를 사용하여 표현식에 표현 가능
+
+<br>
+
+|함수|설명|
+|:---:|:---------------|
+|eval()|- 문자열로 작성한 수식을 이용하여 기존 열을 연산하거나 새로운 열을 생성 <br>- Python 표현식을 그대로 사용할 수 있어 가독성이 높음|
+|query()|- 문자열로 작성한 조건식을 이용하여 행을 필터링<br>- 복잡한 불리언 인덱싱보다 간결하고 직관적인 문법 제공 <br>- 논리 연산자는 `&`, `\|`, `~`의 사용을 권장하며, 각 조건은 괄호 ()로 감싸야 함|
+
+<br>
+
+```{python}
+#  실습 데이터 : tips 데이터셋
+tips = sns.load_dataset('tips')
+```
+
+```{python}
+# 기존 열 연산: 식사 금액에서 세금 10%를 제외한 실수령 금액
+print(tips.eval('total_bill = total_bill * 0.9'))
+```
+
+```{python}
+# 새로운 열 생성: 전체 식사 금액 대비 팁 금액 비율
+# inplace=True: 기존 데이터프레임에 직접 적용(새 객체를 반환하지 않음)
+tips.eval('tip_rate = tip / total_bill', inplace=True)
+print(tips)
+```
+
+```{python}
+# 외부 변수 사용: 전체 식사 금액에 따른 기본(최소) 팁 금액
+tip_percentage = 0.15
+tips.eval('min_tip = total_bill * @tip_percentage', inplace = True)
+print(tips)
+```
+
+```{python}
+# 기본(최소) 팁 금액보다 적게 준 경우 'Below', 많거나 같은 경우 'Above'로 구분
+# 기본(최소) 팁 금액보다 적게 준 경우는 108팀임
+tips['tip_group'] = np.where(tips['tip'] < tips['min_tip'], 'Below', 'Above')
+print(tips['tip_group'].value_counts())
+```
+
+```{python}
+# 단일 조건 필터링: 식사 금액이 20달러 이상인 경우
+print(tips.query('total_bill >= 20'))
+```
+
+```{python}
+# 다중 조건 필터링: 식사 인원 수가 3명 이상이고, 목요일에 방문한 경우
+#print(tips.query('size >= 3 and day == "Thur"'))           # 권장하지 않음, 조건이 복잡할 경우 오류가 발생할 수 있음
+print(tips.query('(size >= 3) & (day == "Thur")'))          # 권장 방식: 괄호로 각 조건을 명확히 구분
+```
+
+```{python}
+# 외부 변수 사용: 기준 팁 금액 미만인 경우
+min_tip_required = 5
+print(tips.query('tip < @min_tip_required'))
+```
+
+```{python}
+# 기준 팁 금액보다 적게 준 경우는 216팀임
+print(tips.query('tip < @min_tip_required').shape[0])
+print(len(tips.query('tip < @min_tip_required')))
+```
+
