@@ -1,59 +1,35 @@
 {
-  "10_seaborn.ipynb": {
-    "10_seaborn.html": "83239703"
-  },
-  "1_environment.ipynb": {
-    "1_environment.html": "fbb3879c"
-  },
-  "2_basic.ipynb": {
-    "2_basic.html": "3c6e36ed"
-  },
-  "3_structure.ipynb": {
-    "3_structure.html": "3d6451c7"
-  },
-  "4_string.ipynb": {
-    "4_string.html": "df5f36a7"
-  },
-  "5_numpy.ipynb": {
-    "5_numpy.html": "e6559367"
-  },
-  "6_pandas.ipynb": {
-    "6_pandas.html": "710dbb0c"
-  },
-  "9_matplotlib.ipynb": {
-    "9_matplotlib.html": "1bd39900"
-  },
-  "about.qmd": {
-    "about.html": "9ddb8b41"
-  },
-  "index.qmd": {
-    "index.html": "3eb341c0"
-  },
   "10_seaborn.qmd": {
-    "10_seaborn.html": "3e221266"
+    "10_seaborn.html": "00f13844"
   },
   "1_environment.qmd": {
-    "1_environment.html": "0339a7e3"
+    "1_environment.html": "366541ad"
   },
   "2_basic.qmd": {
-    "2_basic.html": "5a1d396e"
+    "2_basic.html": "d1311333"
   },
   "3_structure.qmd": {
-    "3_structure.html": "61a92815"
+    "3_structure.html": "284fdbb4"
   },
   "4_string.qmd": {
-    "4_string.html": "64925af3"
+    "4_string.html": "b74a8827"
   },
   "5_numpy.qmd": {
-    "5_numpy.html": "c5c8d97c"
+    "5_numpy.html": "fe16fdf6"
   },
   "6_pandas.qmd": {
-    "6_pandas.html": "4060af59"
+    "6_pandas.html": "1df0524f"
   },
   "7_EDA.qmd": {
-    "7_EDA.html": "659745a0"
+    "7_EDA.html": "bddf8b80"
   },
   "9_matplotlib.qmd": {
-    "9_matplotlib.html": "520432d0"
+    "9_matplotlib.html": "a5d13184"
+  },
+  "about.qmd": {
+    "about.html": "54e84d2c"
+  },
+  "index.qmd": {
+    "index.html": "90416c39"
   }
 }
