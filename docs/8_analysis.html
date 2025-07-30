@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>analysis – Python Wokrshop</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-f33991cf3c59b7de71e019b8ce5d8602.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Python Wokrshop</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-python-basic" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Python Basic</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-python-basic">    
+        <li>
+    <a class="dropdown-item" href="./1_environment.html">
+ <span class="dropdown-text">(1) Python 개발 환경</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./2_basic.html">
+ <span class="dropdown-text">(2) 기초 문법</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./3_structure.html">
+ <span class="dropdown-text">(3) 자료구조</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./4_string.html">
+ <span class="dropdown-text">(4) 문자열</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-data-wrangling" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Data Wrangling</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-data-wrangling">    
+        <li>
+    <a class="dropdown-item" href="./5_numpy.html">
+ <span class="dropdown-text">(1) NumPy</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./6_pandas.html">
+ <span class="dropdown-text">(2) Pandas</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-analysis" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Analysis</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-analysis">    
+        <li>
+    <a class="dropdown-item" href="./7_EDA.html">
+ <span class="dropdown-text">(1) 기술통계</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./8_analysis.html">
+ <span class="dropdown-text">(2) 가설 검정</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-visualization" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Visualization</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-visualization">    
+        <li>
+    <a class="dropdown-item" href="./9_matplotlib.html">
+ <span class="dropdown-text">(1) Matplotlib</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./10_seaborn.html">
+ <span class="dropdown-text">(2) Seaborn</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="99">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#통계적-가설-검정" id="toc-통계적-가설-검정" class="nav-link active" data-scroll-target="#통계적-가설-검정">8.1. 통계적 가설 검정</a></li>
+  <li><a href="#t-test" id="toc-t-test" class="nav-link" data-scroll-target="#t-test">8.2. t-test</a></li>
+  <li><a href="#anova" id="toc-anova" class="nav-link" data-scroll-target="#anova">8.4. ANOVA</a></li>
+  <li><a href="#회귀분석" id="toc-회귀분석" class="nav-link" data-scroll-target="#회귀분석">8.5. 회귀분석</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<h1>
+<ol start="8" type="1">
+<li>가설 검정
+</li></ol></h1>
+<br>
+
+<section id="통계적-가설-검정" class="level2">
+<h2 class="anchored" data-anchor-id="통계적-가설-검정">8.1. 통계적 가설 검정</h2>
+<ul>
+<li>통계적 가설(statistical hypothesis)
+<ul>
+<li>연구 대상인 모집단의 특성(모수)에 대해 세운 가설</li>
+<li>기존에 알려진 사실에 기반하지만, 아직 통계적으로 검증되지 않은 설명이나 주장</li>
+<li>귀무가설(null hypothesis; <span class="math inline">\(H_0\)</span>)
+<ul>
+<li>일반적으로 현재의 상태가 유지되거나, 변화가 없음을 나타냄(효과 없음, 차이 없음)</li>
+<li>수식에서는 = 기호로 표현됨</li>
+<li>예: A약과 B약의 효과는 차이가 없다 (<span class="math inline">\(H_0: \mu_A = \mu_B\)</span>)</li>
+</ul></li>
+<li>대립가설(alternative hypothesis; <span class="math inline">\(H_1\)</span>)
+<ul>
+<li>연구자가 입증하고자 하는 가설(효과 있음, 차이 있음)</li>
+<li>수식에서는 &gt;, &lt;, ≠ 기호로 표현됨</li>
+<li>예: A약이 B약보다 효과가 좋다 (<span class="math inline">\(H_1: \mu_A &gt; \mu_B\)</span>)</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><br></p>
+<ul>
+<li>통계적 가설 검정(statistical hypothesis test)
+<ul>
+<li><strong>귀무가설이 참이라고 가정</strong>할 때, 수집된 데이터가 귀무가설과 얼마나 일치하는지를 검정하는 과정</li>
+<li>데이터가 귀무가설과 일치하지 않을수록, 대립가설을 지지하는 통계적 근거가 강하다고 판단 → 귀무가설 기각(reject <span class="math inline">\(H_0\)</span>)</li>
+<li>(예) 형사 재판에서 피고인 A씨는 무죄일까? 유죄일까?
+<ul>
+<li>자백을 하지 않는 한 실제로 범죄를 저질렀는지는 알 수 없다. 증거(데이터)를 통해 무죄인지 유죄인지 판단하자(가설검증).</li>
+<li>모수(실제 범죄행위 여부)에 대한 두 가지 주장 → 이 중 무엇이 귀무가설? 대립가설?
+<ol type="1">
+<li>A씨는 실제로 범죄를 저지르지 않았다(무죄)</li>
+<li>A씨는 실제로 범죄를 저질렀다(유죄)</li>
+</ol></li>
+<li>대한민국 헌법 제27조 제4항 - 형사피고인은 유죄의 판결이 확정될 때까지 무죄로 추정된다.
+<ul>
+<li>귀무가설 <span class="math inline">\(H_0\)</span> : 실제로 범죄를 저지르지 않았다(무죄)</li>
+<li>대립가설 <span class="math inline">\(H_1\)</span> : 실제로 범죄를 저질렀다(유죄)</li>
+</ul></li>
+<li><u>무죄를 가정하고 살펴봤을 때, 범죄의 증거가 충분하다면 유죄로 판결함</u>
+<ul>
+<li>“<code>무죄를 가정</code> = <code>귀무가설이 참이라고 가정</code>”하고 살펴봤을 때,</li>
+<li>“<code>범죄의 증거</code> = <code>무죄가 아니라는 증거</code> = <code>귀무가설과 일치하지 않는 증거</code>”가 충분하다면</li>
+<li>“<code>유죄로 판결함</code> = <code>귀무가설을 기각함</code>”</li>
+</ul></li>
+</ul></li>
+<li><strong>“귀무가설을 기각하지 않는다”</strong> 의 의미
+<ul>
+<li>귀무가설이 반드시 참이라는 뜻이 아니며, 단지 귀무가설을 유지하는 상태임</li>
+<li>즉 수집된 데이터로는 귀무가설이 틀렸다고 판단할 충분한 증거가 없다는 의미</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><br></p>
+<ul>
+<li>통계적 가설 검정 절차
+<ol type="1">
+<li>가설 설정</li>
+<li>유의수준 α 결정
+<ul>
+<li>귀무가설이 참인데도 불구하고 이를 잘못 기각하는 최대 허용 확률</li>
+<li>일반적으로 1%, <strong>5%</strong>, 10%를 사용함</li>
+</ul></li>
+<li>p-value 계산
+<ul>
+<li>귀무가설이 참일 때, 관측된 데이터보다 극단적인 데이터가 나올 확률</li>
+<li>p-value가 작을수록 데이터가 귀무가설과 일치하지 않는다는 의미</li>
+</ul></li>
+<li>가설 검정 및 의사결정
+<ul>
+<li><strong><code>p-value &lt; α</code></strong> : 귀무가설 기각(<strong>통계적으로 유의하다; statistical significant</strong>)</li>
+<li>가설 검정 결과는 최종적인 의사결정(정책 수립, 제품 출시, 실험 중단 등)의 근거로 활용함</li>
+</ul></li>
+</ol></li>
+</ul>
+<p><br></p>
+</section>
+<section id="t-test" class="level2">
+<h2 class="anchored" data-anchor-id="t-test">8.2. t-test</h2>
+<ul>
+<li>두 집단의 평균 차이를 비교하는 데 사용되는 통계적 검정 방법</li>
+<li>전제 조건
+<ul>
+<li>정규성 가정 : 각 집단의 데이터가 정규분포를 따른다고 가정함</li>
+<li>등분산성 가정 : 두 집단의 분산이 같다고 가정함</li>
+</ul></li>
+<li>가설 형태
+<ul>
+<li>귀무가설 <span class="math inline">\(H_0\)</span> : 집단1과 집단2의 평균은 같다</li>
+<li>대립가설 <span class="math inline">\(H_1\)</span> : 집단1과 집단2의 평균은 같지 않다(양측검정), 집단1이 집단2보다 평균이 더 크다/작다(단측검정)</li>
+</ul></li>
+</ul>
+<p><br></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 29%">
+<col style="width: 70%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">구분</th>
+<th style="text-align: left;">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">독립표본 t-test</td>
+<td style="text-align: left;">- 서로 독립된 두 집단의 평균 비교 <br>- (예) A반과 B반의 시험 점수 비교</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">대응표본 t-test</td>
+<td style="text-align: left;">- 짝지은 두 집단의 평균 비교 <br>- (예) 운동 전과 후의 체중 변화, 일란성 쌍둥이의 책임감 비교</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<div id="1aad0d6e" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="8dab23d4" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">## 실습 데이터 : penguins 데이터셋</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> sns.load_dataset(<span class="st">'penguins'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="620679e2" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># species: 펭귄 종(Adelie, Chinstrap, Gentoo)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># island: 서식하는 섬(Torgersen, Biscoe, Dream)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># bill_length_mm: 부리 길이(mm)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># bill_depth_mm: 부리 깊이(mm)</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># flipper_length_mm: 지느러미 길이(mm)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># body_mass_g: 체질량(g)</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># sex: 성별(Male, Female)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>penguins.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 344 entries, 0 to 343
+Data columns (total 7 columns):
+ #   Column             Non-Null Count  Dtype  
+---  ------             --------------  -----  
+ 0   species            344 non-null    object 
+ 1   island             344 non-null    object 
+ 2   bill_length_mm     342 non-null    float64
+ 3   bill_depth_mm      342 non-null    float64
+ 4   flipper_length_mm  342 non-null    float64
+ 5   body_mass_g        342 non-null    float64
+ 6   sex                333 non-null    object 
+dtypes: float64(4), object(3)
+memory usage: 18.9+ KB</code></pre>
+</div>
+</div>
+<div id="b0c446dc" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">## 독립표본 t-test : Adelie와 Chinstrap의 평균 부리 길이(bill_length_mm) 비교</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 방법1 : scipy 사용</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ttest_ind, shapiro, levene</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 두 집단 데이터 (결측치 제거)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>bill_length1 <span class="op">=</span> penguins[penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Adelie'</span>][<span class="st">'bill_length_mm'</span>].dropna()</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>bill_length2 <span class="op">=</span> penguins[penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Chinstrap'</span>][<span class="st">'bill_length_mm'</span>].dropna()</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 정규성 검정</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>stat1, p1 <span class="op">=</span> shapiro(bill_length1)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>stat2, p2 <span class="op">=</span> shapiro(bill_length2)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'[Shapiro-Wilk test]'</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Adelie:    W=</span><span class="sc">{</span>stat1<span class="sc">:.3f}</span><span class="ss">, p-value=</span><span class="sc">{</span>p1<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Chinstrap: W=</span><span class="sc">{</span>stat2<span class="sc">:.3f}</span><span class="ss">, p-value=</span><span class="sc">{</span>p2<span class="sc">:.3f}</span><span class="ch">\n</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[Shapiro-Wilk test]
+Adelie:    W=0.993, p-value=0.717
+Chinstrap: W=0.975, p-value=0.194
+</code></pre>
+</div>
+</div>
+<div id="22ff8a68" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 등분산성 검정</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>stat3, p3 <span class="op">=</span> levene(bill_length1, bill_length1)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"[Levene's test]"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'F=</span><span class="sc">{</span>stat3<span class="sc">:.3f}</span><span class="ss">, p-value=</span><span class="sc">{</span>p3<span class="sc">:.3f}</span><span class="ch">\n</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[Levene's test]
+F=0.000, p-value=1.000
+</code></pre>
+</div>
+</div>
+<div id="18790122" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. 독립표본 t-test</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>t_stat, p_val <span class="op">=</span> ttest_ind(bill_length1, bill_length2, equal_var<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'[Independent t-test]'</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f't=</span><span class="sc">{</span>t_stat<span class="sc">:.3f}</span><span class="ss">, p-value=</span><span class="sc">{</span>p_val<span class="sc">:.3f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[Independent t-test]
+t=-23.802, p-value=0.000</code></pre>
+</div>
+</div>
+<div id="bdcffdd6" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">## 독립표본 t-test : Adelie와 Chinstrap의 평균 부리 길이(bill_length_mm) 비교</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 방법2 : statsmodels 사용</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.formula.api <span class="im">import</span> ols</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 독립표본 t-test</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>penguins2 <span class="op">=</span> penguins[penguins[<span class="st">'species'</span>]<span class="op">!=</span><span class="st">'Gentoo'</span>]</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> ols(<span class="st">'bill_length_mm ~ C(species)'</span>, data<span class="op">=</span>penguins2).fit()</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:         bill_length_mm   R-squared:                       0.723
+Model:                            OLS   Adj. R-squared:                  0.722
+Method:                 Least Squares   F-statistic:                     566.5
+Date:                Thu, 31 Jul 2025   Prob (F-statistic):           2.01e-62
+Time:                        02:12:30   Log-Likelihood:                -542.08
+No. Observations:                 219   AIC:                             1088.
+Df Residuals:                     217   BIC:                             1095.
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+===========================================================================================
+                              coef    std err          t      P&gt;|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------------
+Intercept                  38.7914      0.235    164.997      0.000      38.328      39.255
+C(species)[T.Chinstrap]    10.0424      0.422     23.802      0.000       9.211      10.874
+==============================================================================
+Omnibus:                        0.164   Durbin-Watson:                   2.945
+Prob(Omnibus):                  0.921   Jarque-Bera (JB):                0.077
+Skew:                           0.045   Prob(JB):                        0.962
+Kurtosis:                       3.020   Cond. No.                         2.42
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</code></pre>
+</div>
+</div>
+<div id="c73b3e6c" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">## 대응표본 t-test : 학습 프로그램 참여 전후 평균 시험 점수 비교</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ttest_rel, shapiro, levene</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 학습 프로그램 참여 전후 시험 점수 데이터</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>pre_scores <span class="op">=</span> [<span class="dv">68</span>, <span class="dv">74</span>, <span class="dv">71</span>, <span class="dv">69</span>, <span class="dv">75</span>, <span class="dv">65</span>, <span class="dv">72</span>, <span class="dv">78</span>, <span class="dv">70</span>, <span class="dv">73</span>, <span class="dv">67</span>, <span class="dv">76</span>, <span class="dv">74</span>, <span class="dv">71</span>, <span class="dv">69</span>, <span class="dv">68</span>, <span class="dv">77</span>, <span class="dv">72</span>, <span class="dv">70</span>, <span class="dv">74</span>]</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>post_scores <span class="op">=</span> [<span class="dv">72</span>, <span class="dv">78</span>, <span class="dv">75</span>, <span class="dv">74</span>, <span class="dv">80</span>, <span class="dv">68</span>, <span class="dv">75</span>, <span class="dv">83</span>, <span class="dv">75</span>, <span class="dv">77</span>, <span class="dv">70</span>, <span class="dv">80</span>, <span class="dv">78</span>, <span class="dv">75</span>, <span class="dv">73</span>, <span class="dv">72</span>, <span class="dv">82</span>, <span class="dv">76</span>, <span class="dv">74</span>, <span class="dv">78</span>]</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'pre'</span>: pre_scores, <span class="st">'post'</span>: post_scores})</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 정규성 검정</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>stat1, p1 <span class="op">=</span> shapiro(pre_scores)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>stat2, p2 <span class="op">=</span> shapiro(post_scores)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'[Shapiro-Wilk test]'</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Pre_scores:  W=</span><span class="sc">{</span>stat1<span class="sc">:.3f}</span><span class="ss">, p-value=</span><span class="sc">{</span>p1<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Post_scores: W=</span><span class="sc">{</span>stat2<span class="sc">:.3f}</span><span class="ss">, p-value=</span><span class="sc">{</span>p2<span class="sc">:.3f}</span><span class="ch">\n</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[Shapiro-Wilk test]
+Pre_scores:  W=0.984, p-value=0.975
+Post_scores: W=0.983, p-value=0.966
+</code></pre>
+</div>
+</div>
+<div id="2abaf88a" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 대응표본 t-test</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>t_stat, p_val <span class="op">=</span> ttest_rel(pre_scores, post_scores)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'[Paired t-test]'</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f't=</span><span class="sc">{</span>t_stat<span class="sc">:.3f}</span><span class="ss">, p-value=</span><span class="sc">{</span>p_val<span class="sc">:.3f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[Paired t-test]
+t=-28.617, p-value=0.000</code></pre>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="anova" class="level2">
+<h2 class="anchored" data-anchor-id="anova">8.4. ANOVA</h2>
+<ul>
+<li>여러 집단의 평균 차이를 비교하는 데 사용되는 통계적 검정 방법</li>
+<li>전제 조건
+<ul>
+<li>정규성 가정 : 각 집단의 데이터가 정규분포를 따른다고 가정함</li>
+<li>등분산성 가정 : 모든 집단의 분산이 동일하다고 가정함</li>
+<li>독립성 가정 : 각 집단의 데이터는 서로 독립적이어야 함</li>
+</ul></li>
+<li>가설 형태
+<ul>
+<li>귀무가설 <span class="math inline">\(H_0\)</span> : 모든 집단의 평균은 같다</li>
+<li>대립가설 <span class="math inline">\(H_1\)</span> : 적어도 하나의 집단 평균은 다르다</li>
+</ul></li>
+<li>사후 검정(Post-hoc test)
+<ul>
+<li>ANOVA 결과에서 유의한 경우, 어떤 집단 간에 차이가 있는지를 확인하기 위해 추가 분석을 수행해야 함</li>
+<li>대표적인 방법으로는 Tukey HSD, Bonferroni 등이 있음</li>
+</ul></li>
+</ul>
+<p><br></p>
+<div id="f55d8cda" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">## One-way ANOVA : 암컷 펭귄의 종에 따른 평균 체질량 비교</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 방법1 : scipy 사용</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> f_oneway</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.stats.multicomp <span class="im">import</span> pairwise_tukeyhsd</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 세 집단 데이터 (결측치 제거)</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>female <span class="op">=</span> penguins[penguins[<span class="st">'sex'</span>]<span class="op">==</span><span class="st">'Female'</span>]</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>body_mass1 <span class="op">=</span> female[female[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Adelie'</span>][<span class="st">'body_mass_g'</span>].dropna()</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>body_mass2 <span class="op">=</span> female[female[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Chinstrap'</span>][<span class="st">'body_mass_g'</span>].dropna()</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>body_mass3 <span class="op">=</span> female[female[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Gentoo'</span>][<span class="st">'body_mass_g'</span>].dropna()</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 정규성 검정</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>stat1, p1 <span class="op">=</span> shapiro(body_mass1)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>stat2, p2 <span class="op">=</span> shapiro(body_mass2)</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>stat3, p3 <span class="op">=</span> shapiro(body_mass3)</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'[Shapiro-Wilk test]'</span>)</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Adelie:    W=</span><span class="sc">{</span>stat1<span class="sc">:.3f}</span><span class="ss">, p-value=</span><span class="sc">{</span>p1<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Chinstrap: W=</span><span class="sc">{</span>stat2<span class="sc">:.3f}</span><span class="ss">, p-value=</span><span class="sc">{</span>p2<span class="sc">:.3f}</span><span class="ss">'</span>)</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Gentoo:    W=</span><span class="sc">{</span>stat3<span class="sc">:.3f}</span><span class="ss">, p-value=</span><span class="sc">{</span>p3<span class="sc">:.3f}</span><span class="ch">\n</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[Shapiro-Wilk test]
+Adelie:    W=0.977, p-value=0.199
+Chinstrap: W=0.963, p-value=0.306
+Gentoo:    W=0.981, p-value=0.511
+</code></pre>
+</div>
+</div>
+<div id="1e56fabb" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 등분산성 검정</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>stat3, p3 <span class="op">=</span> levene(body_mass1, body_mass2, body_mass3)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"[Levene's test]"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'F=</span><span class="sc">{</span>stat3<span class="sc">:.3f}</span><span class="ss">, p-value=</span><span class="sc">{</span>p3<span class="sc">:.3f}</span><span class="ch">\n</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[Levene's test]
+F=0.036, p-value=0.965
+</code></pre>
+</div>
+</div>
+<div id="670a42a3" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. 일원분산분석</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>F, p_value <span class="op">=</span> f_oneway(body_mass1, body_mass2, body_mass3)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'[One-way ANOVA]'</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'F=</span><span class="sc">{</span>F<span class="sc">:.3f}</span><span class="ss">, p-value=</span><span class="sc">{</span>p_value<span class="sc">:.3f}</span><span class="ch">\n\n</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[One-way ANOVA]
+F=393.246, p-value=0.000
+
+</code></pre>
+</div>
+</div>
+<div id="a5a40567" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. 사후 검정 : Tukey HSD 방법 사용</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>tukey <span class="op">=</span> pairwise_tukeyhsd(endog<span class="op">=</span>female[<span class="st">'body_mass_g'</span>], groups<span class="op">=</span>female[<span class="st">'species'</span>], alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tukey.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Multiple Comparison of Means - Tukey HSD, FWER=0.05      
+===============================================================
+  group1    group2   meandiff p-adj    lower     upper   reject
+---------------------------------------------------------------
+   Adelie Chinstrap  158.3703 0.0179   22.3208  294.4197   True
+   Adelie    Gentoo 1310.9058    0.0 1195.6491 1426.1624   True
+Chinstrap    Gentoo 1152.5355    0.0 1011.0062 1294.0648   True
+---------------------------------------------------------------</code></pre>
+</div>
+</div>
+<div id="aeca3724" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">## One-way ANOVA : 암컷 펭귄의 종에 따른 평균 체질량 비교</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 방법2 : statsmodels 사용</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. 일원분산분석</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> ols(<span class="st">'body_mass_g ~ C(species)'</span>, data<span class="op">=</span>female).fit()</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>anova_table <span class="op">=</span> sm.stats.anova_lm(model, typ<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(anova_table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  sum_sq     df           F        PR(&gt;F)
+C(species)  6.035002e+07    2.0  393.246478  6.775686e-63
+Residual    1.243076e+07  162.0         NaN           NaN</code></pre>
+</div>
+</div>
+<p><br></p>
+</section>
+<section id="회귀분석" class="level2">
+<h2 class="anchored" data-anchor-id="회귀분석">8.5. 회귀분석</h2>
+<ul>
+<li>하나 이상의 독립변수(x)가 종속변수(y)에 미치는 영향력의 크기를 수학적 관계식(모형)으로 추정하는 통계적 검정 방법
+<ul>
+<li>독립변수(independent variable) : 다른 변수의 변화를 일으키는 변수</li>
+<li>종속변수(dependent variable) : 다른 변수의 영향으로 변화하는 변수</li>
+</ul></li>
+<li>독립변수가 종속변수에 미치는 영향이 통계적으로 유의한지 검정하고, 이를 바탕으로 새로운 독립변수 값에 대한 종속변수의 값을 예측함</li>
+<li>독립변수 개수에 따른 구분
+<ul>
+<li>단순선형 회귀분석
+<ul>
+<li>독립변수가 1개인 경우</li>
+<li>모형 : <span class="math inline">\(y = \beta_0 + \beta_1x + \epsilon\)</span></li>
+</ul></li>
+<li>다중선형 회귀분석
+<ul>
+<li>독립변수가 2개 이상인 경우</li>
+<li>모형 : <span class="math inline">\(y = \beta_0 + \beta_1x_1 + \beta_2x_2 + \cdots + \beta_p x_p + \epsilon\)</span></li>
+</ul></li>
+</ul></li>
+<li>일반적으로 최소제곱추정법(OLS)을 통해 주어진 데이터에 가장 적합한 회귀선을 구함 <span class="math display">\[\hat{y} = b_0 + b_1x\]</span> <span class="math display">\[\hat{y} = b_0 + b_1x+ b_2x_2 + \cdots + b_p x_p\]</span></li>
+<li>잔차(residual) : 관측값과 예측값의 차이, <span class="math inline">\(y-\hat{y}\)</span></li>
+<li>결정계수(<span class="math inline">\(R^2\)</span>)
+<ul>
+<li>회귀모형이 데이터를 얼마나 잘 설명하는지 나타내는 지표</li>
+<li>0에서 1 사이의 값을 가지며, 1에 가까울수록 회귀모형의 설명력이 높음</li>
+</ul></li>
+</ul>
+<p><br></p>
+<p><img src="./images/fig8-1.jpg" class="img-fluid"></p>
+<p><br></p>
+<div id="b7926471" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">## 다중선형 회귀분석 : 펭귄의 체질량에 영향을 미치는 요인</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> pearsonr</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. 결측치 제거</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>penguins_df <span class="op">=</span> penguins.dropna(axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. 상관계수</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(penguins_df.select_dtypes(include<span class="op">=</span><span class="st">'number'</span>).corr())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   bill_length_mm  bill_depth_mm  flipper_length_mm  \
+bill_length_mm           1.000000      -0.228626           0.653096   
+bill_depth_mm           -0.228626       1.000000          -0.577792   
+flipper_length_mm        0.653096      -0.577792           1.000000   
+body_mass_g              0.589451      -0.472016           0.872979   
+
+                   body_mass_g  
+bill_length_mm        0.589451  
+bill_depth_mm        -0.472016  
+flipper_length_mm     0.872979  
+body_mass_g           1.000000  </code></pre>
+</div>
+</div>
+<div id="1b3bd326" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># [참고] 상관분석</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>r, p_value <span class="op">=</span> pearsonr(penguins_df[<span class="st">'bill_length_mm'</span>], penguins_df[<span class="st">'bill_depth_mm'</span>])</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="ch">\n</span><span class="ss">[Pearson Correlation between bill length and bill depth]'</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'r=</span><span class="sc">{</span>r<span class="sc">:.3f}</span><span class="ss">, p-value=</span><span class="sc">{</span>p_value<span class="sc">:.3f}</span><span class="ch">\n\n</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+[Pearson Correlation between bill length and bill depth]
+r=-0.229, p-value=0.000
+
+</code></pre>
+</div>
+</div>
+<div id="d0fc80d5" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 다중선형 회귀분석</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> ols(<span class="st">'body_mass_g ~ C(species) + C(island) + C(sex) + bill_length_mm + bill_depth_mm + flipper_length_mm'</span>, data<span class="op">=</span>penguins_df).fit()</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:            body_mass_g   R-squared:                       0.875
+Model:                            OLS   Adj. R-squared:                  0.872
+Method:                 Least Squares   F-statistic:                     284.1
+Date:                Thu, 31 Jul 2025   Prob (F-statistic):          1.85e-141
+Time:                        02:12:32   Log-Likelihood:                -2353.6
+No. Observations:                 333   AIC:                             4725.
+Df Residuals:                     324   BIC:                             4760.
+Df Model:                           8                                         
+Covariance Type:            nonrobust                                         
+===========================================================================================
+                              coef    std err          t      P&gt;|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------------
+Intercept               -1500.0291    575.822     -2.605      0.010   -2632.852    -367.207
+C(species)[T.Chinstrap]  -260.3063     88.551     -2.940      0.004    -434.513     -86.100
+C(species)[T.Gentoo]      987.7614    137.238      7.197      0.000     717.771    1257.752
+C(island)[T.Dream]        -13.1031     58.541     -0.224      0.823    -128.271     102.065
+C(island)[T.Torgersen]    -48.0636     60.922     -0.789      0.431    -167.915      71.788
+C(sex)[T.Male]            387.2243     48.138      8.044      0.000     292.521     481.927
+bill_length_mm             18.1893      7.136      2.549      0.011       4.150      32.229
+bill_depth_mm              67.5754     19.821      3.409      0.001      28.581     106.570
+flipper_length_mm          16.2385      2.939      5.524      0.000      10.456      22.021
+==============================================================================
+Omnibus:                        1.114   Durbin-Watson:                   2.167
+Prob(Omnibus):                  0.573   Jarque-Bera (JB):                1.101
+Skew:                           0.139   Prob(JB):                        0.577
+Kurtosis:                       2.958   Cond. No.                     7.59e+03
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 7.59e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.</code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

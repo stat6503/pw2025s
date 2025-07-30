@@ -172,6 +172,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="dropdown-item" href="./7_EDA.html">
  <span class="dropdown-text">(1) 기술통계</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="./8_analysis.html">
+ <span class="dropdown-text">(2) 가설 검정</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -276,16 +280,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>분할표 : 두 개의 범주형 변수의 분포를 파악하기 위해 한 변수의 범주는 행에, 다른 변수의 범주는 열에 배치하여 교차되는 칸에 해당 빈도를 정리한 표</li>
 </ul>
 <p><br></p>
-<div id="cd7f6b6a" class="cell" data-execution_count="1">
+<div id="5b29c3f6" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="00f22fce" class="cell" data-execution_count="2">
+<div id="c629dde8" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">## 실습 데이터 : tips 데이터셋</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>tips <span class="op">=</span> sns.load_dataset(<span class="st">'tips'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="48dbbf4f" class="cell" data-execution_count="3">
+<div id="77124062" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># total_bill: 식사 금액</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># tip: 팁 금액</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># sex: 성별</span></span>
@@ -312,7 +316,7 @@ memory usage: 7.4 KB
 None</code></pre>
 </div>
 </div>
-<div id="7e946aca" class="cell" data-execution_count="4">
+<div id="630ee6d8" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 빈도표1 : 요일별 주문 수</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tips.value_counts(<span class="st">'day'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -324,7 +328,7 @@ Fri     19
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="eec48e33" class="cell" data-execution_count="5">
+<div id="c9081439" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 빈도표2 : 요일별 주문 비율</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tips.value_counts(<span class="st">'day'</span>, normalize<span class="op">=</span><span class="va">True</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -336,7 +340,7 @@ Fri     0.077869
 Name: proportion, dtype: float64</code></pre>
 </div>
 </div>
-<div id="1982085c" class="cell" data-execution_count="6">
+<div id="11325ea8" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 빈도표3 : 요일별 주문 수 및 비율 (범주 순서 지정)</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>days <span class="op">=</span> [<span class="st">'Thur'</span>, <span class="st">'Fri'</span>, <span class="st">'Sat'</span>, <span class="st">'Sun'</span>]</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>cat_type <span class="op">=</span> pd.CategoricalDtype(categories<span class="op">=</span>days, ordered<span class="op">=</span><span class="va">True</span>)</span>
@@ -356,7 +360,7 @@ Sat   87  0.356557
 Sun   76  0.311475</code></pre>
 </div>
 </div>
-<div id="2b2bf8de" class="cell" data-execution_count="7">
+<div id="8a2f9c73" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 교차표1 : 요일에 따른 식사 시간 빈도</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.crosstab(tips[<span class="st">'day'</span>], tips[<span class="st">'time'</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -368,7 +372,7 @@ Sat       0      87
 Sun       0      76</code></pre>
 </div>
 </div>
-<div id="1dd576da" class="cell" data-execution_count="8">
+<div id="50785856" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 교차표2 : 요일에 따른 식사 시간 비율 (전체 %)</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.crosstab(tips[<span class="st">'day'</span>], tips[<span class="st">'time'</span>], normalize<span class="op">=</span><span class="va">True</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -380,7 +384,7 @@ Sat   0.000000  0.356557
 Sun   0.000000  0.311475</code></pre>
 </div>
 </div>
-<div id="1ed3b6c1" class="cell" data-execution_count="9">
+<div id="869ffdec" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 교차표3 : 요일에 따른 식사 시간 비율 (행 기준 %)</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.crosstab(tips[<span class="st">'day'</span>], tips[<span class="st">'time'</span>], normalize<span class="op">=</span><span class="st">'index'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -392,7 +396,7 @@ Sat   0.000000  1.000000
 Sun   0.000000  1.000000</code></pre>
 </div>
 </div>
-<div id="60b1625c" class="cell" data-execution_count="10">
+<div id="7aba6657" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 교차표4 : 요일에 따른 식사 시간 비율 (열 기준 %)</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.crosstab(tips[<span class="st">'day'</span>], tips[<span class="st">'time'</span>], normalize<span class="op">=</span><span class="st">'columns'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -456,10 +460,10 @@ Sun   0.000000  0.431818</code></pre>
 </ul></li>
 </ul>
 <p><br></p>
-<div id="06354ac1" class="cell" data-execution_count="11">
+<div id="ea1c879c" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="82ed0d9e" class="cell" data-execution_count="12">
+<div id="69422850" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 요약 통계1 : 식사 금액 분포 </span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tips[<span class="st">'total_bill'</span>].describe())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -474,7 +478,7 @@ max       50.810000
 Name: total_bill, dtype: float64</code></pre>
 </div>
 </div>
-<div id="ff2e2ebf" class="cell" data-execution_count="13">
+<div id="2d6a1b6c" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 요약 통계2 : 팁 금액 분포</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>summary <span class="op">=</span> stats.describe(tips[<span class="st">'tip'</span>])</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'nobs: </span><span class="sc">{</span>summary<span class="sc">.</span>nobs<span class="sc">}</span><span class="ss">'</span>)</span>
@@ -503,7 +507,7 @@ kurtosis: 3.55</code></pre>
 <li>집단별로 수치형 변수의 분포(평균, 중앙값, 표준편차, 사분위수 등)를 비교함으로써 집단 간 차이를 파악할 수 있음</li>
 </ul>
 <p><br></p>
-<div id="b34f81da" class="cell" data-execution_count="14">
+<div id="c3b5caf7" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 흡연 여부별 팁 금액 분포</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tips.groupby(<span class="st">'smoker'</span>, observed<span class="op">=</span><span class="va">True</span>)[<span class="st">'total_bill'</span>].describe())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -545,7 +549,7 @@ No      151.0  19.188278  8.255582  7.25  13.325  17.59  22.755  48.33</code></p
 <p><br></p>
 <p><img src="./images/fig7-2.jpg" class="img-fluid" style="width:70.0%"></p>
 <p><br></p>
-<div id="296fb852" class="cell" data-execution_count="15">
+<div id="bea4237e" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 상관관계1 : 식사 금액과 팁 금액 간 상관계수</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> pearsonr</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>r, p <span class="op">=</span> pearsonr(tips[<span class="st">'total_bill'</span>], tips[<span class="st">'tip'</span>])</span>
@@ -554,7 +558,7 @@ No      151.0  19.188278  8.255582  7.25  13.325  17.59  22.755  48.33</code></p
 <pre><code>상관계수: 0.68, p-value: 0.000</code></pre>
 </div>
 </div>
-<div id="793c1398" class="cell" data-execution_count="16">
+<div id="01c319ac" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 상관관계2 : 식사 금액, 식사 인원 수와 팁 금액 간 상관계수</span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>tips[[<span class="st">'total_bill'</span>, <span class="st">'size'</span>, <span class="st">'tip'</span>]].corr()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
@@ -619,11 +623,11 @@ No      151.0  19.188278  8.255582  7.25  13.325  17.59  22.755  48.33</code></p
 </ul></li>
 </ul>
 <p><br></p>
-<div id="197f9670" class="cell" data-execution_count="17">
+<div id="504955cc" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">## 실습 데이터 : titanic</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>titanic <span class="op">=</span> sns.load_dataset(<span class="st">'titanic'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="8fb42864" class="cell" data-execution_count="18">
+<div id="d7b12bef" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># survived: 생존 여부(0, 1)</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># pclass: 객실 등급(1, 2, 3)</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># sex: 성별</span></span>
@@ -665,7 +669,7 @@ dtypes: bool(2), category(2), float64(2), int64(4), object(5)
 memory usage: 80.7+ KB</code></pre>
 </div>
 </div>
-<div id="b4e2f4e2" class="cell" data-execution_count="19">
+<div id="f035a75c" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 결측값 확인</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>titanic[titanic[<span class="st">'embarked'</span>].isna()]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
@@ -736,7 +740,7 @@ memory usage: 80.7+ KB</code></pre>
 </div>
 </div>
 </div>
-<div id="d2301dc0" class="cell" data-execution_count="20">
+<div id="62370679" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 각 열별 결측값 개수 확인</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 부울형은 산술 연산 시 True는 1, False는 0으로 계산되므로</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># isna() 결과에 sum()을 적용하면 결측값 개수가 계산됨</span></span>
@@ -760,7 +764,7 @@ alone            0
 dtype: int64</code></pre>
 </div>
 </div>
-<div id="f8275359" class="cell" data-execution_count="21">
+<div id="4bd3f959" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 결측값이 많이 포함된 열 삭제</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>titanic.drop(<span class="st">'deck'</span>, axis<span class="op">=</span><span class="dv">1</span>, inplace<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>titanic.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -771,7 +775,7 @@ dtype: int64</code></pre>
       dtype='object')</code></pre>
 </div>
 </div>
-<div id="fc4742a7" class="cell" data-execution_count="22">
+<div id="9ce8662f" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># age 변수를 제외한 변수들 중 결측값이 하나라도 포함된 행 삭제</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> titanic.columns.difference([<span class="st">'age'</span>])</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>titanic_new <span class="op">=</span> titanic.dropna(subset<span class="op">=</span>cols, how<span class="op">=</span><span class="st">'any'</span>)</span>
@@ -794,7 +798,7 @@ alone            0
 dtype: int64</code></pre>
 </div>
 </div>
-<div id="b6e10417" class="cell" data-execution_count="23">
+<div id="af82e1bd" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 결측값을 최빈값으로 대체</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>mode <span class="op">=</span> titanic[<span class="st">'embarked'</span>].mode()[<span class="dv">0</span>]</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>titanic[<span class="st">'embarked'</span>] <span class="op">=</span> titanic[<span class="st">'embarked'</span>].fillna(mode)</span>
@@ -817,7 +821,7 @@ alone            0
 dtype: int64</code></pre>
 </div>
 </div>
-<div id="643f60fa" class="cell" data-execution_count="24">
+<div id="3e7931f3" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 결측값을 중앙값으로 대체</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>median <span class="op">=</span> titanic.groupby([<span class="st">'sex'</span>, <span class="st">'who'</span>])[<span class="st">'age'</span>].transform(<span class="st">'median'</span>)</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>titanic[<span class="st">'age'</span>] <span class="op">=</span> titanic[<span class="st">'age'</span>].fillna(median)</span>
@@ -869,7 +873,7 @@ dtype: int64</code></pre>
 </ul></li>
 </ul>
 <p><br></p>
-<div id="ff5acabf" class="cell" data-execution_count="25">
+<div id="b125c496" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 이상값 확인 및 삭제1 : 사분위수 범위(IQR) 활용</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> iqr_outlier(data, column):</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    col_data <span class="op">=</span> data[column].dropna()</span>
@@ -893,7 +897,7 @@ parch 변수의 이상값 개수: 213
 fare 변수의 이상값 개수: 116</code></pre>
 </div>
 </div>
-<div id="2c158497" class="cell" data-execution_count="26">
+<div id="5c222549" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 이상값 확인 및 삭제2 : Z-score 활용</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> z_outlier(df, c, t<span class="op">=</span><span class="dv">3</span>):</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> scipy.stats <span class="im">import</span> zscore</span>
@@ -912,7 +916,7 @@ parch 변수의 이상값 개수: 15
 fare 변수의 이상값 개수: 20</code></pre>
 </div>
 </div>
-<div id="82ba1ea5" class="cell" data-execution_count="27">
+<div id="fd22aabc" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># [참고] 변수 분포의 왜도를 확인하고, 적절한 이상값 탐지 방법(IQR, Z-score)을 선택</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> column <span class="kw">in</span> titanic.select_dtypes(include<span class="op">=</span><span class="st">'number'</span>).columns:</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span>column<span class="sc">}</span><span class="ss"> 변수의 왜도: </span><span class="sc">{</span>stats<span class="sc">.</span>skew(titanic[column])<span class="sc">:.3f}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
