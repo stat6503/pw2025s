@@ -371,16 +371,16 @@ window.Quarto = {
 </tbody>
 </table>
 <p><br></p>
-<div id="8d6f3b54" class="cell" data-execution_count="1">
+<div id="db15de6d" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="d897013e" class="cell" data-execution_count="2">
+<div id="dc843e26" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">## 실습 데이터 : penguins 데이터셋</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> sns.load_dataset(<span class="st">'penguins'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="ecbfa46b" class="cell" data-execution_count="3">
+<div id="70fa7b29" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># species: 펭귄 종(Adelie, Chinstrap, Gentoo)</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># island: 서식하는 섬(Torgersen, Biscoe, Dream)</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># bill_length_mm: 부리 길이(mm)</span></span>
@@ -406,7 +406,7 @@ dtypes: float64(4), object(3)
 memory usage: 18.9+ KB</code></pre>
 </div>
 </div>
-<div id="b9cf70d3" class="cell" data-execution_count="4">
+<div id="1339f553" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">## 독립표본 t-test : Adelie와 Chinstrap의 평균 부리 길이(bill_length_mm) 비교</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 방법1 : scipy 사용</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ttest_ind, shapiro, levene</span>
@@ -428,7 +428,7 @@ Chinstrap: W=0.975, p-value=0.194
 </code></pre>
 </div>
 </div>
-<div id="5b1bb101" class="cell" data-execution_count="5">
+<div id="94e7e598" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 등분산성 검정</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>stat3, p3 <span class="op">=</span> levene(bill_length1, bill_length1)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"[Levene's test]"</span>)</span>
@@ -439,7 +439,7 @@ F=0.000, p-value=1.000
 </code></pre>
 </div>
 </div>
-<div id="120d4b47" class="cell" data-execution_count="6">
+<div id="fa3178fa" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. 독립표본 t-test</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>t_stat, p_val <span class="op">=</span> ttest_ind(bill_length1, bill_length2, equal_var<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'[Independent t-test]'</span>)</span>
@@ -449,7 +449,7 @@ F=0.000, p-value=1.000
 t=-23.802, p-value=0.000</code></pre>
 </div>
 </div>
-<div id="b3be62cd" class="cell" data-execution_count="7">
+<div id="2f16b6bf" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">## 독립표본 t-test : Adelie와 Chinstrap의 평균 부리 길이(bill_length_mm) 비교</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 방법2 : statsmodels 사용</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.formula.api <span class="im">import</span> ols</span>
@@ -465,7 +465,7 @@ Dep. Variable:         bill_length_mm   R-squared:                       0.723
 Model:                            OLS   Adj. R-squared:                  0.722
 Method:                 Least Squares   F-statistic:                     566.5
 Date:                Fri, 01 Aug 2025   Prob (F-statistic):           2.01e-62
-Time:                        15:28:28   Log-Likelihood:                -542.08
+Time:                        16:03:14   Log-Likelihood:                -542.08
 No. Observations:                 219   AIC:                             1088.
 Df Residuals:                     217   BIC:                             1095.
 Df Model:                           1                                         
@@ -486,7 +486,7 @@ Notes:
 [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</code></pre>
 </div>
 </div>
-<div id="10797bbd" class="cell" data-execution_count="8">
+<div id="8e5dfa28" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">## 대응표본 t-test : 학습 프로그램 참여 전후 평균 시험 점수 비교</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> ttest_rel, shapiro, levene</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -508,7 +508,7 @@ Post_scores: W=0.983, p-value=0.966
 </code></pre>
 </div>
 </div>
-<div id="632a264c" class="cell" data-execution_count="9">
+<div id="0f5f0e45" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 대응표본 t-test</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>t_stat, p_val <span class="op">=</span> ttest_rel(pre_scores, post_scores)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'[Paired t-test]'</span>)</span>
@@ -542,7 +542,7 @@ t=-28.617, p-value=0.000</code></pre>
 </ul></li>
 </ul>
 <p><br></p>
-<div id="1dd2a6d7" class="cell" data-execution_count="10">
+<div id="9d1e0537" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co">## One-way ANOVA : 암컷 펭귄의 종에 따른 평균 체질량 비교</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 방법1 : scipy 사용</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> f_oneway</span>
@@ -570,7 +570,7 @@ Gentoo:    W=0.981, p-value=0.511
 </code></pre>
 </div>
 </div>
-<div id="ff8d821f" class="cell" data-execution_count="11">
+<div id="51ea52f3" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 등분산성 검정</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>stat3, p3 <span class="op">=</span> levene(body_mass1, body_mass2, body_mass3)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"[Levene's test]"</span>)</span>
@@ -581,7 +581,7 @@ F=0.036, p-value=0.965
 </code></pre>
 </div>
 </div>
-<div id="13bbffb8" class="cell" data-execution_count="12">
+<div id="e925b3fd" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. 일원분산분석</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>F, p_value <span class="op">=</span> f_oneway(body_mass1, body_mass2, body_mass3)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'[One-way ANOVA]'</span>)</span>
@@ -593,7 +593,7 @@ F=393.246, p-value=0.000
 </code></pre>
 </div>
 </div>
-<div id="1131fcb3" class="cell" data-execution_count="13">
+<div id="00d82e24" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 5. 사후 검정 : Tukey HSD 방법 사용</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>tukey <span class="op">=</span> pairwise_tukeyhsd(endog<span class="op">=</span>female[<span class="st">'body_mass_g'</span>], groups<span class="op">=</span>female[<span class="st">'species'</span>], alpha<span class="op">=</span><span class="fl">0.05</span>)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tukey.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -608,7 +608,7 @@ Chinstrap    Gentoo 1152.5355    0.0 1011.0062 1294.0648   True
 ---------------------------------------------------------------</code></pre>
 </div>
 </div>
-<div id="9a4f6c69" class="cell" data-execution_count="14">
+<div id="95f2c1fd" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">## One-way ANOVA : 암컷 펭귄의 종에 따른 평균 체질량 비교</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co">## 방법2 : statsmodels 사용</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
@@ -658,7 +658,7 @@ Residual    1.243076e+07  162.0         NaN           NaN</code></pre>
 <p><br></p>
 <p><img src="./images/fig8-1.jpg" class="img-fluid"></p>
 <p><br></p>
-<div id="c4724989" class="cell" data-execution_count="15">
+<div id="1615108f" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co">## 다중선형 회귀분석 : 펭귄의 체질량에 영향을 미치는 요인</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> pearsonr</span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -681,7 +681,7 @@ flipper_length_mm     0.872979
 body_mass_g           1.000000  </code></pre>
 </div>
 </div>
-<div id="f89e1776" class="cell" data-execution_count="16">
+<div id="63c90e1e" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># [참고] 상관분석</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>r, p_value <span class="op">=</span> pearsonr(penguins_df[<span class="st">'bill_length_mm'</span>], penguins_df[<span class="st">'bill_depth_mm'</span>])</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="ch">\n</span><span class="ss">[Pearson Correlation between bill length and bill depth]'</span>)</span>
@@ -694,7 +694,7 @@ r=-0.229, p-value=0.000
 </code></pre>
 </div>
 </div>
-<div id="5c44c8ef" class="cell" data-execution_count="17">
+<div id="43734e1c" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. 다중선형 회귀분석</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> ols(<span class="st">'body_mass_g ~ C(species) + C(island) + C(sex) + bill_length_mm + bill_depth_mm + flipper_length_mm'</span>, data<span class="op">=</span>penguins_df).fit()</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(model.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -705,7 +705,7 @@ Dep. Variable:            body_mass_g   R-squared:                       0.875
 Model:                            OLS   Adj. R-squared:                  0.872
 Method:                 Least Squares   F-statistic:                     284.1
 Date:                Fri, 01 Aug 2025   Prob (F-statistic):          1.85e-141
-Time:                        15:28:30   Log-Likelihood:                -2353.6
+Time:                        16:03:15   Log-Likelihood:                -2353.6
 No. Observations:                 333   AIC:                             4725.
 Df Residuals:                     324   BIC:                             4760.
 Df Model:                           8                                         

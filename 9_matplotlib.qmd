@@ -190,7 +190,7 @@ print(air_quality.head())
 # 선 그래프1 : Paris의 NO2 농도 변화
 paris_data = air_quality[air_quality['city'] == 'Paris']
 
-plt.figure(figsize=(6, 3))
+plt.figure(figsize=(8, 3))
 plt.plot(paris_data['date.utc'], paris_data['value'])
 plt.title('NO₂ levels in Paris')
 plt.ylabel('NO₂ (µg/m³)')
@@ -204,7 +204,7 @@ plt.show()
 cities = ['Paris', 'London', 'Antwerpen']
 colors = ['steelblue', 'green', 'indianred']
 
-plt.figure(figsize=(6, 3))
+plt.figure(figsize=(8, 3))
 
 for i, city in enumerate(cities):
     city_data = air_quality[air_quality['city'] == city]
@@ -279,7 +279,7 @@ plt.show()
 cities = ['Paris', 'London', 'Antwerpen']
 colors = ['steelblue', 'green', 'indianred']
 
-plt.figure(figsize=(7, 3))
+plt.figure(figsize=(8, 3))
 
 for i, city in enumerate(cities):
     city_data = air_quality[air_quality['city'] == city]
