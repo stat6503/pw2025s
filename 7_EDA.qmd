@@ -283,7 +283,7 @@ titanic.isna().sum()
 
 ## 7.5. 이상값 처리
 + 이상값(outlier)
-  + 정상적인 데이터 분포에서 벗어나 극단적으로 크거나 작은 값
+  + 대부분의 데이터가 분포된 범위를 벗어나 극단적으로 크거나 작은 값
   + 데이터 분석과 모델링 과정에서 결과에 큰 영향을 미칠 수 있음
 
 <br>
@@ -302,7 +302,7 @@ titanic.isna().sum()
 <br>
 
 ```{python}
-# 이상값 확인 및 삭제1 : 사분위수 범위(IQR) 활용
+# 이상값 반환 함수1 : 사분위수 범위(IQR) 활용
 def iqr_outlier(data, column):
     col_data = data[column].dropna()
     Q1 = col_data.quantile(0.25)
@@ -313,13 +313,21 @@ def iqr_outlier(data, column):
     outliers = data[(data[column] < lower_bound) | (data[column] > upper_bound)]
     return outliers
 
+# 각 열별 이상값 개수 확인
 for column in titanic.select_dtypes(include='number').columns:
     outlier = iqr_outlier(titanic, column)
     print(f'{column} 변수의 이상값 개수: {len(outlier)}')
 ```
 
 ```{python}
-# 이상값 확인 및 삭제2 : Z-score 활용
+# age 변수의 이상값을 제외한 데이터프레임
+outliers_age = iqr_outlier(titanic, 'age')
+titanic_new = titanic.drop(index=outliers_age.index)
+titanic_new
+```
+
+```{python}
+# 이상값 반환 함수2 : Z-score 활용
 def z_outlier(df, c, t=3):
     from scipy.stats import zscore
     z = zscore(df[c].dropna())
@@ -328,6 +336,13 @@ def z_outlier(df, c, t=3):
 for column in titanic.select_dtypes(include='number').columns:
     outlier = z_outlier(titanic, column)
     print(f'{column} 변수의 이상값 개수: {len(outlier)}')
+```
+
+```{python}
+# age 변수의 이상값을 제외한 데이터프레임
+outliers_age = z_outlier(titanic, 'age')
+titanic_new = titanic.drop(index=outliers_age.index)
+titanic_new
 ```
 
 ```{python}

@@ -190,11 +190,11 @@ print(air_quality.head())
 # 선 그래프1 : Paris의 NO2 농도 변화
 paris_data = air_quality[air_quality['city'] == 'Paris']
 
-plt.figure(figsize=(8, 3))
+plt.figure(figsize=(6, 3))
 plt.plot(paris_data['date.utc'], paris_data['value'])
 plt.title('NO₂ levels in Paris')
-plt.xlabel('Date')
 plt.ylabel('NO₂ (µg/m³)')
+plt.xticks(fontsize=10, rotation=30)
 plt.tight_layout()
 plt.show()
 ```
@@ -204,7 +204,7 @@ plt.show()
 cities = ['Paris', 'London', 'Antwerpen']
 colors = ['steelblue', 'green', 'indianred']
 
-plt.figure(figsize=(8, 3))
+plt.figure(figsize=(6, 3))
 
 for i, city in enumerate(cities):
     city_data = air_quality[air_quality['city'] == city]
@@ -213,9 +213,9 @@ for i, city in enumerate(cities):
              linewidth=1, alpha=0.7)
 
 plt.title('NO₂ levels in Paris, London, and Antwerpen')
-plt.xlabel('Date')
 plt.ylabel('NO₂ (µg/m³)')
 plt.legend(loc='upper right', fontsize=7)
+plt.xticks(fontsize=10, rotation=30)
 plt.tight_layout()
 plt.show()
 ```
@@ -235,7 +235,6 @@ city_counts = air_quality['city'].value_counts()
 plt.figure(figsize=(5, 3))
 plt.bar(city_counts.index, city_counts.values, color=['steelblue', 'seagreen', 'indianred'])
 plt.title('Frequency of Measurements by City')
-plt.xlabel('City')
 plt.ylabel('Frequency')
 plt.tight_layout()
 plt.show()
@@ -248,7 +247,6 @@ city_avg = air_quality.groupby('city')['value'].mean()
 plt.figure(figsize=(5, 3))
 plt.bar(city_avg.index, city_avg.values, color=['steelblue', 'seagreen', 'indianred'])
 plt.title('Average NO₂ Levels by City')
-plt.xlabel('City')
 plt.ylabel('Average NO₂ (µg/m³)')
 plt.tight_layout()
 plt.show()
@@ -281,7 +279,7 @@ plt.show()
 cities = ['Paris', 'London', 'Antwerpen']
 colors = ['steelblue', 'green', 'indianred']
 
-plt.figure(figsize=(8, 3))
+plt.figure(figsize=(7, 3))
 
 for i, city in enumerate(cities):
     city_data = air_quality[air_quality['city'] == city]

@@ -37,6 +37,8 @@ jupyter: python3
 
 ## 10.2. 막대 그래프
 
+<br>
+
 ```{python}
 import numpy as np
 import pandas as pd
@@ -80,7 +82,7 @@ print(smoking)
 
 ```{python}
 # 막대 그래프1 : 성별에 따른 음주 여부, 흡연 상태 분포
-fig = plt.figure(figsize=(8, 4))
+fig = plt.figure(figsize=(6, 4))
 area1 = fig.add_subplot(1, 2, 1)
 area2 = fig.add_subplot(1, 2, 2)
 
@@ -112,6 +114,8 @@ plt.show()
 <br>
 
 ## 10.3. 히스토그램
+
+<br>
 
 ```{python}
 # 성별에 따라 데이터 분리
@@ -154,7 +158,7 @@ plt.show()
 
 ```{python}
 # 상자그림1 : 성별 및 음주 여부에 따른 몸무게 분포
-plt.figure(figsize=(8, 4))
+plt.figure(figsize=(6, 4))
 plt.title('Weight By Gender and Drinking')
 sns.boxplot(x='gender', y='weight', hue='drinking', width=0.7, gap = 0.1, data=data6)
 plt.show()
@@ -162,7 +166,7 @@ plt.show()
 
 ```{python}
 # 상자그림2 : 성별 및 흡연 상태에 따른 몸무게 분포
-plt.figure(figsize=(8, 6))
+plt.figure(figsize=(6, 6))
 plt.title('Weight By Gender and Smoking')
 sns.boxplot(x='weight', y='gender', hue='smoking', width=0.7, gap=0.1, data=data6, orient='h')
 plt.show()
